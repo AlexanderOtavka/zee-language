@@ -1,0 +1,30 @@
+// There is a file in the path std/io.zee the .zee is omitted
+import std/io
+import ./mydata.json as mydata
+
+// Types are optional, @Int typecasts and hints type to compiler
+@Int x = 5
+
+
+// The compiler can infer types, sometimes
+foo = 8 + x
+
+
+
+
+y = "My string"
+
+
+
+z = mydata.z
+
+// print() or io.print()
+print(y + x + z)
+
+func @Str my_func(@Float number, @Str string):
+    return string * number
+
+
+if y == null or x == false or
+   y == x and z or true:
+    print("It is true")
