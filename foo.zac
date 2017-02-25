@@ -1,0 +1,3 @@
+op_0_malloc INT_SIZE
+set_op_0_val INT_SIZE  00 00 00 05
+set_stack_from_op_0_64 00

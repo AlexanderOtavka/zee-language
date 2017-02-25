@@ -2,19 +2,19 @@
 
 
 
-op_0_malloc INT_SIZE
-op_0_set_val INT_SIZE  00 00 00 05
-stack_set_from_op_0 00
+op_0_malloc         INT_SIZE
+set_op_0_val        INT_SIZE  00 00 00 05
+set_stack_from_op_0 00
 
-op_0_malloc INT_SIZE
-op_0_set_val 08
-op_1_set_from_stack 00
+op_0_malloc         INT_SIZE
+set_op_0_val        08
+set_op_1_from_stack 00
 op_int_add
-stack_set_from_op_0 01
+set_stack_from_op_0 01
 
-op_0_malloc 00 0a
-op_0_set_val 00 0a  "My string" 0
-stack_set_from_op_0 02
+op_0_malloc         00 0a
+set_op_0_val        00 0a  "My string" 0
+set_stack_from_op_0 02
 
 -----
 
@@ -25,10 +25,12 @@ CHAR    -- 'f' 'o' 'o' -- 0x666f6f
 STRING  -- "foo"       -- 0x666f6f // not auto null terminated
         -- "foo" 0     -- 0x666f6f00 // add 0 for null term
 
+
 CONSTANTS:
 
 INT_SIZE = 00 04
 FLOAT_SIZE = 00 04
+
 
 INSTRUCTIONS SO FAR:
 
@@ -39,22 +41,50 @@ see_next_2_bytes <instruction_set_c:2> <instruction_args:?>
 // Malloc size memory and put pointer in op slot
 op_0_malloc <size:2>
 op_1_malloc <size:2>
+op_0_big_malloc <size:8>
+op_1_big_malloc <size:8>
 
 // Dereference pointer in op slot and set value
-op_0_set_val <size:2> <value:size>
-op_1_set_val <size:2> <value:size>
+set_op_0_val <size:2> <value:size>
+set_op_1_val <size:2> <value:size>
+set_op_0_big_val <size:8> <value:size>
+set_op_1_big_val <size:8> <value:size>
 
 // Put pointer at stack slot into op slot
-set_op_0_from_stack <stack_index:1>
-set_op_1_from_stack <stack_index:1>
-set_op_0_from_big_stack <stack_index:2>
-set_op_1_from_big_stack <stack_index:2>
+set_op_0_from_stack_8 <stack_index:1>
+set_op_1_from_stack_8 <stack_index:1>
+set_op_0_from_stack_16 <stack_index:1>
+set_op_1_from_stack_16 <stack_index:1>
+set_op_0_from_stack_32 <stack_index:1>
+set_op_1_from_stack_32 <stack_index:1>
+set_op_0_from_stack_64 <stack_index:1>
+set_op_1_from_stack_64 <stack_index:1>
+set_op_0_from_big_stack_8 <stack_index:4>
+set_op_1_from_big_stack_8 <stack_index:4>
+set_op_0_from_big_stack_16 <stack_index:4>
+set_op_1_from_big_stack_16 <stack_index:4>
+set_op_0_from_big_stack_32 <stack_index:4>
+set_op_1_from_big_stack_32 <stack_index:4>
+set_op_0_from_big_stack_64 <stack_index:4>
+set_op_1_from_big_stack_64 <stack_index:4>
 
 // Put pointer at op slot into stack slot
-set_stack_from_op_0 <stack_index:1>
-set_stack_from_op_1 <stack_index:1>
-set_big_stack_from_op_0 <stack_index:2>
-set_big_stack_from_op_1 <stack_index:2>
+set_stack_from_op_0_8 <stack_index:1>
+set_stack_from_op_1_8 <stack_index:1>
+set_stack_from_op_0_16 <stack_index:1>
+set_stack_from_op_1_16 <stack_index:1>
+set_stack_from_op_0_32 <stack_index:1>
+set_stack_from_op_1_32 <stack_index:1>
+set_stack_from_op_0_64 <stack_index:1>
+set_stack_from_op_1_64 <stack_index:1>
+set_big_stack_from_op_0_8 <stack_index:4>
+set_big_stack_from_op_1_8 <stack_index:4>
+set_big_stack_from_op_0_16 <stack_index:4>
+set_big_stack_from_op_1_16 <stack_index:4>
+set_big_stack_from_op_0_32 <stack_index:4>
+set_big_stack_from_op_1_32 <stack_index:4>
+set_big_stack_from_op_0_64 <stack_index:4>
+set_big_stack_from_op_1_64 <stack_index:4>
 
 // Do an integer operation, op_1 on op_0, and put the result in op_0 
 op_int_add

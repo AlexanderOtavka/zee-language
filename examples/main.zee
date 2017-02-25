@@ -1,30 +1,68 @@
-// There is a file in the path std/io.zee the .zee is omitted
-import std/io
-import ./mydata.json as mydata
+import "std/io" member print
+import "./mydata.json" as mydata
 
-// Types are optional, @Int typecasts and hints type to compiler
-@Int x = 5
+// Types are optional, @Int typecasts, the compiler enforces
+// types where it can
+@Int var x = 5
 
 
 // The compiler can infer types, sometimes
-foo = 8 + x
+var foo = 8 + x
 
 
 
 
-y = "My string"
+// It is lexically scoped, so var declarations are needed
+var y = "My string"
 
 
 
-z = mydata.z
+var z = mydata.z
 
-// print() or io.print()
+// print()
 print(y + x + z)
 
 func @Str my_func(@Float number, @Str string):
-    return string * number
+    return string * number // repeats string number times
 
+func my_special_func<is_bound=false>(@is<Str> str, args...,
+                                     kwargs***):
+    switch is_bound:
+        case true:
+            if this:
+                print(this)
+            else:
+                for arg in args:
+                    print(arg)
+            break;
+        case false:
+            print(str)
+            break
+        default:
+            print("wtf")
+
+    return kwargs.keys
 
 if y == null or x == false or
    y == x and z or true:
     print("It is true")
+
+func print_this():
+    print(this)
+
+print_this<"foo">() // prints "foo"
+
+class Foo:
+    print_this<this>() // prints "<class Foo at 0x123...>"
+    print_this<>() // same as above
+    print_this() // prints "null"
+
+    @staticmethod<>
+    func i_am_static():
+        print_this<>() // prints "null"
+    
+    @override<>
+    func __copy__():
+        print("I am overridden copy")
+        print_this<>() // prints "<Foo object at 0x543...>"
+        return super.__copy__()
